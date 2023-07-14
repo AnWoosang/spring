@@ -21,7 +21,7 @@ public class BeanLifeCycleTest {
     void lifeCycleTest() {
         // ConfigurableApplicationContext가 AnnotationConfigApplicationContext의 상위에 있기 때문에 자식클래스를 생성해서 부모클래스에 대입하는 것이 가능하다.
         ConfigurableApplicationContext ac = new AnnotationConfigApplicationContext(LifeCycleConfig.class);
-        NetworkClient client = new NetworkClient();
+        NetworkClient client = ac.getBean(NetworkClient.class);
 
         // 닫는 메소드는 잘 쓰지 않기 때문에 기본 메서드에서는 지원하지 않는다.
         // 따라서 Application Context 대신 ConfigurableApplicationContext를 사용해준다. - 우리가 ApplicationContext를 사용할 때 close를 사용하는 경우가 거의 없다. -> 제공 x

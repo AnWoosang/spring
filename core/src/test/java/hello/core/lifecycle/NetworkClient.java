@@ -1,6 +1,14 @@
 package hello.core.lifecycle;
 
-public class NetworkClient {
+import org.springframework.beans.factory.DisposableBean;
+import org.springframework.beans.factory.InitializingBean;
+
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
+
+// InitializingBean과 DisposableBean은 스프링에만 의존하기 때문에 순수 자바에서는 사용할 수 없다.
+public class NetworkClient{
 
     private String url;
 
@@ -28,4 +36,29 @@ public class NetworkClient {
     public void disconnect() {
         System.out.println("close: " + url);
     }
+
+
+    @PostConstruct
+    public void init() {
+        System.out.println("NetworkClient.init");
+        connect();
+        call("초기화 연결 메시지");
+    }
+
+    @PreDestroy
+    public void close() {
+        disconnect();
+    }
+
+
+//    @Override
+//    public void destroy() throws Exception {
+//        disconnect();
+//    }
+
+//    @Override
+//    public void afterPropertiesSet() throws Exception {
+//        connect();
+//        call("초기화 연결 메시지");
+//    }
 }
